@@ -1,0 +1,117 @@
+* {
+    font-family: helvetica, sans-serif, arial;
+    margin: 0;
+    padding: 0;
+}
+
+body { 
+    background-color: #121212;
+    color: #ffffff;
+}
+
+button:hover {
+    cursor: pointer;
+    filter: brightness(75%);
+}
+
+.content {
+    width: 396px;
+    margin: 10% auto;
+}
+
+/* Display for timer */
+
+#infoDisplay {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+}
+
+#infoDisplay p {
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 18px;
+
+}
+
+#currentOS {
+    font-size: 72px;
+}
+
+/* Playback controls for timer */
+
+#rebootControls {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#rebootControls button {
+    margin: 0 20px;
+}
+
+#stopBtn {
+    background-color: #BB86FC;
+    color: #000000;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    width: 80px;
+    height: 50px;
+    background-color: #BB86FC;
+}
+
+.playbackButton {
+    background-color: #BB86FC;
+    color: #000000;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    width: 80px;
+    height: 50px;
+}
+
+.playbackButton:hover {
+    background-color: #BB86FC;
+}
+
+/* Controls to adjust duration */
+
+#controls {
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#controls p {
+    display: inline;
+}
+
+.metaControls {
+    width: 150px;
+    display: inline-block;
+    margin: 0 10px;
+    line-height: 25px;
+}
+
+.metaButtons {
+    margin-top: 10px;
+}
+
+.durationButton {
+    background-color: #03DAC6;
+    font-weight: bold;
+    font-family: arial;
+    border-radius: 5px;
+    border: none;
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.downBtn {
+    float: left;
+}
+
+.upBtn {
+    float: right;
+}
