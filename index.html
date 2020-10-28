@@ -9,46 +9,43 @@
         <div class="content">
             <div id="infoDisplay">
                 <h1 id="currentOS">0</h1>
-                <p id="roundsCounter">Rounds hacked: 0</p>  
-                <p id="roundsUntilGod">Rounds until GOD: ???</p>   
+                <p id="roundsUntilGod">Until GOD: ???</p><br>
+                <p id="roundsCounter">Round: 0</p>  <br>
                 <p id="activeAdmins">Active admins: 0</p>   
+                /
                 <p id="activeUsers">Active users: 0</p>   
                 <br>
-                <button id="roundBtn" class="playbackButton" type="button" onclick="controlInput('newRound')">New round</button>
+                <button id="roundBtn" class="playbackButton" type="button" onclick="InputHandler.command('newRound')">New round</button>
             </div>
             <div id="controls">
                 <div class="metaControls">
                     <p>Total used programs per actions</p><br>
                     <div class="metaButtons">
-                            <button id="programsDownBtn" class="durationButton downBtn" type="button" onclick="programsUsed('programDown')">-</button>
+                            <button id="programsDownBtn" class="durationButton downBtn" type="button" onclick="InputHandler.command('decreasePrograms')">-</button>
                             <p id="numPrograms">0</p>
-                            <button id="programsUpBtn" class="durationButton upBtn" type="button" onclick="programsUsed('programUp')">+</button>
+                            <button id="programsUpBtn" class="durationButton upBtn" type="button" onclick="InputHandler.command('increasePrograms')">+</button>
                     </div>
                 </div>     
                 <div class="metaControls">
                     <p>Total opposed hits on illegal actions</p><br>
                     <div class="metaButtons">
-                            <button id="opposedDownBtn" class="durationButton downBtn" type="button" onclick="opposedHits('opposedDown')">-</button>
+                            <button id="opposedDownBtn" class="durationButton downBtn" type="button" onclick="InputHandler.command('decreaseHits')">-</button>
                             <p id="numHits">0</p>
-                            <button id="opposedUpBtn" class="durationButton upBtn" type="button" onclick="opposedHits('opposedUp')">+</button>
+                            <button id="opposedUpBtn" class="durationButton upBtn" type="button" onclick="InputHandler.command('increaseHits')">+</button>
                     </div>
                 </div>     
             </div>  
-            <div id="newAdmin">
-                <form id="newAdminForm">
-                    <legend style="float: left;">Add active admin</legend>
-                    <input type="text" id="name" name="name" placeholder="n00bAdmin">
-                    <input type="text" id="note" name="note" placeholder="notes about the sucker">
-                    <input type="button" id="newAdminBtn" value="New admin" onclick="newAdmin()">
+            <div id="newAccess">
+                <form id="newAccessForm">
+                    <legend style="float: left;">Add new access</legend>
+                    <input type="text" id="accessName" name="accessName" placeholder="n00b">
+                    <input type="text" id="accessNote" name="accessNote" placeholder="notes about the sucker">
+                    <label for="read">Admin</label>
+                    <input type="radio" id="adminRadio" name="accessRadio" value="admin">
+                    <label for="read">User</label>
+                    <input type="radio" id="userRadio" name="accessRadio" value="user">
                 </form>
-            </div>
-            <div id="newUser">
-                <form id="newAdminForm">
-                    <legend style="float: left;">Add active user</legend>
-                    <input type="text" id="name" name="name" placeholder="n00bUser">
-                    <input type="text" id="note" name="note" placeholder="notes about the sucker">
-                    <input type="button" id="newUserBtn" value="New user" onclick="newUser()">
-                </form>
+                <button id="newAccessBtn" class="playbackButton" type="button" onclick="InputHandler.command('newAccess')">Log Access</button>
             </div>
             <div id="rebootControls">
                 <!-- MAKE REBOOT BUTTON GREYED OUT AND UNCLICKABLE UNTIL COFNIRM IS PRESSED -->
@@ -56,7 +53,10 @@
                 <button id="stopBtn" class="playbackButton" type="button" onclick="controlInput('reboot')">REBOOT CYBERDECK</button>
                 <button id="confirmBtn" class="playbackButton" type="button" onclick="controlInput('reboot')">Confirm reboot</button>
             </div>
-            <!-- LIST OF ACTIVE ADMINS AND USERS GO HERE, JUST YEET SOME AUTO GEN. CODE FROM TODOJS -->
+            <div id="accessList">
+                <!-- LIST OF ACTIVE ADMINS AND USERS GO HERE, JUST YEET SOME AUTO GEN. CODE FROM TODOJS -->
+
+            </div>
         </div>
     </body>
 </html>
