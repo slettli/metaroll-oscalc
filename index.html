@@ -4,12 +4,13 @@
         <title>oscalc</title>
         <script type="text/javascript" src="oscalc.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div class="content">
             <div id="topInfo">
-                <p id="currentOS">0</p><br>
-                <p id="roundsUntilGod">Until GOD: ???</p>
+                <h1 id="currentOS">0</h1><br>
+                <h2 id="roundsUntilGod">Until GOD: ???</h2>
             </div>
             <div id="infoDisplay">
                 <p id="roundsCounter">Round: 0</p><br>
@@ -19,7 +20,7 @@
             </div>
             <div id="programsContainer">
                 <div class="metaControls">
-                    <p>Total used programs x actions</p><br>
+                    <p>Total used hacking programs</p><br>
                     <div class="metaButtons">
                             <button id="programsDownBtn" class="numButton downBtn" type="button" onclick="InputHandler.command('decreasePrograms')">-</button>
                             <p class="numIndicator" id="numPrograms">0</p>
@@ -44,13 +45,17 @@
                     <input type="text" id="accessName" name="accessName" placeholder="n00b">
                     <input type="text" id="accessNote" name="accessNote" placeholder="notes about the sucker">
                 </form>
-                <button id="newAccessBtn" class="halfWideButton" type="button" onclick="InputHandler.command('newAdmin')">Log Admin</button>
-                <button id="newAccessBtn" class="halfWideButton" type="button" onclick="InputHandler.command('newUser')">Log User</button>
+                <div id="newAccessBtn">
+                    <button class="halfWideButton downBtn" type="button" onclick="InputHandler.command('newAdmin')">Add Admin</button>
+                    <button class="halfWideButton upBtn" type="button" onclick="InputHandler.command('newUser')">Add User</button>    
+                </div>
             </div>
             <div id="rebootControls">
                 <!-- MAKE REBOOT BUTTON GREYED OUT AND UNCLICKABLE UNTIL COFNIRM IS PRESSED -->
-                <button id="confirmBtn" class="rebootBtn" type="button" onclick="controlInput('reboot')">CONFIRM</button>
-                <button id="confirmBtn" class="rebootBtn" type="button" onclick="controlInput('reboot')">CONFIRM</button><br>
+                <div id="rebootControlsConfirm">
+                    <button id="confirmBtn" class="rebootBtn" type="button" onclick="controlInput('reboot')">CONFIRM</button>
+                    <button id="confirmBtn" class="rebootBtn" type="button" onclick="controlInput('reboot')">CONFIRM</button>
+                </div>
                 <button id="stopBtn" type="button" onclick="controlInput('reboot')">REBOOT CYBERDECK</button>
             </div>
             <div id="accessList">

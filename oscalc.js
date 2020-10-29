@@ -119,7 +119,7 @@ const NewAccess = (() => {
     const _readForm = (type) => {
         let name = document.getElementById("accessName").value;
         let notes = document.getElementById("accessNote").value;
-        if (type === "admin"){
+        if (type == "newAdmin"){
             _newAdmin(name,notes);
         }
         else {
