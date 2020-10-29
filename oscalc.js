@@ -260,7 +260,6 @@ const InputHandler = (() => {
             case "rebootCyberdeck":
                 if (CONFIRMONE === true && CONFIRMTWO === true){
                     RebootCyberdeck.reboot();
-                    RenderHandler.update();
                 }
                 break;
         }
@@ -278,7 +277,7 @@ const InputHandler = (() => {
             tmp.classList.add("halfVisible");
             tmp.classList.add("hoverNo");
         }
-        if (OS >= 30){
+        if (OS >= 30 || UNTILGOD == 1){
             document.getElementById("osDiv").classList.add("glitch");
             document.getElementById("roundsUntilGod").classList.add("glitch");
         }
