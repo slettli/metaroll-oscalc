@@ -25,7 +25,6 @@ p {
 
 button:hover {
     cursor: pointer;
-    filter: brightness(75%);
 }
 
 input[type=text], [type=number] {
@@ -152,10 +151,6 @@ input[type=text], [type=number] {
     border: none;
     width: 45%;
     height: 50px;
-}
-
-.rebootBtn:hover {
-    filter: brightness(90%);
 }
 
 .metaControls {
