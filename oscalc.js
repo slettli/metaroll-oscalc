@@ -1,5 +1,4 @@
-let adminArray = [];
-let userArray = [];
+let accessArray = [];
 let OSMAX = 40; // Max OS score before GOD smites you
 let OS = 0; // The decker's OS score
 let ROUNDS = 0;
@@ -8,6 +7,8 @@ let HITS = 0; // Total opposed hits on illegal actions
 let UNTILGOD = "???";
 let NUMADMINS = 0;
 let NUMUSERS = 0;
+let CONFIRMONE = false;
+let CONFIRMTWO = false;
 
 // Runs each rounds and does necessary calculations
 // This should be split up more for organizing
@@ -15,59 +16,41 @@ const RoundCalculator = (() => {
 
     const _newRound = () => {
         _calculateOS();
+        _calcRounds();
         _updateRounds();
         ROUNDS++;
     };
     
     const _calculateOS = () => {
-        let totalUsers = _getTotalUsers();
-        let adminOS = totalUsers[0];
+        let adminOS = NUMADMINS;
         adminOS = adminOS * 3;
-        let userOS = totalUsers[1];
+        let userOS = NUMUSERS;
         OS = OS + adminOS + userOS; // Add to OS
+    };
+
+    const _calcRounds = () => {
+        let adminOS = NUMADMINS;
+        adminOS = adminOS * 3;
+        let userOS = NUMUSERS;
 
         let remainingOS = 40 - OS;
+        let accessOsPerRound = adminOS + userOS;
         
-        let tmp = adminOS + userOS;
-        if (tmp > 0){
-            UNTILGOD = remainingOS / tmp;
+        if (accessOsPerRound > 0){
+            UNTILGOD = remainingOS / accessOsPerRound;
             UNTILGOD = Math.ceil(UNTILGOD);
         }
         else {
             UNTILGOD = "???";
         }
-    };
 
-    const _getTotalUsers = () => {
-        let totalAdmins = 0;
-        let totalUsers = 0;
-
-        if (adminArray.length > 0){
-            for (let i = 0; i < adminArray.length; i++){
-                totalAdmins++;
-            }
-        }
-        if (userArray.length > 0){
-            for (let i = 0; i < userArray.length; i++){
-                totalUsers++;
-            }
-        }
-
-        return [totalAdmins,totalUsers];
-    };
+    }
 
     const _updateRounds = () => {
-        if (adminArray.length > 0){
-            for (let i = 0; i < adminArray.length; i++){
-                if (adminArray[i].getActive){
-                    adminArray[i].addRound();
-                }
-            }
-        }
-        if (userArray.length > 0){
-            for (let i = 0; i < userArray.length; i++){
-                if (userArray[i].getActive){
-                    userArray[i].addRound();
+        if (accessArray.length > 0){
+            for (let i = 0; i < accessArray.length; i++){
+                if (accessArray[i].getActive()){
+                    accessArray[i].addRound();
                 }
             }
         }
@@ -77,13 +60,13 @@ const RoundCalculator = (() => {
         _newRound();
     };
 
-    const calcOS = () => {
-        _calculateOS();
+    const calcRounds = () => {
+        _calcRounds();
     }
 
     return {
         newRound,
-        calcOS
+        calcRounds
     }
 })();
 
@@ -130,13 +113,13 @@ const NewAccess = (() => {
     const _newAdmin = (name, notes) => {
         let newAdmin = AccessObject(name, notes);
         newAdmin.toggleAccess()
-        adminArray.push(newAdmin);
+        accessArray.push(newAdmin);
         NUMADMINS++;
     };
 
     const _newUser = (name, notes) => {
         let newUser = AccessObject(name, notes);
-        userArray.push(newUser);
+        accessArray.push(newUser);
         NUMUSERS++;
     };
 
@@ -185,6 +168,34 @@ const UpdateOS = (() => {
      }
 })();
 
+// Restarts the tracker
+const RebootCyberdeck = (() => {
+    const _restartTracker = () => {
+        accessArray = [];
+        OSMAX = 40; // Max OS score before GOD smites you
+        OS = 0; // The decker's OS score
+        ROUNDS = 0;
+        PROGRAMS = 0; // Number of illegal programs used per actions
+        HITS = 0; // Total opposed hits on illegal actions
+        UNTILGOD = "???";
+        NUMADMINS = 0;
+        NUMUSERS = 0;
+        CONFIRMONE = false;
+        CONFIRMTWO = false;
+        let tmp1 = document.getElementById("confirmBtn1");
+        tmp1.classList.remove("fullyVisible");
+        let tmp2 = document.getElementById("confirmBtn2");
+        tmp2.classList.remove("fullyVisible");
+    };
+
+    const reboot = () => {
+        _restartTracker();
+    };
+
+    return { reboot }
+
+})();
+
 // Takes input from buttons and acts accordingly
 const InputHandler = (() => {
     const _handleCommand = (command) => {
@@ -206,14 +217,44 @@ const InputHandler = (() => {
                 break;
             case "newUser":
                 NewAccess.add("newUser");
-                RoundCalculator.calcOS();
+                RoundCalculator.calcRounds();
                 break;
             case "newAdmin":
                 NewAccess.add("newAdmin");
-                RoundCalculator.calcOS();
+                RoundCalculator.calcRounds();
+                break;
+            case "confirmOne":
+                CONFIRMONE = true;
+                let tmp1 = document.getElementById("confirmBtn1");
+                tmp1.classList.add("fullyVisible");
+                break;
+            case "confirmTwo":
+                CONFIRMONE = true;
+                let tmp2 = document.getElementById("confirmBtn2");
+                tmp2.classList.add("fullyVisible");
+                break;
+            case "rebootCyberdeck":
+                RebootCyberdeck.reboot();
+                RenderHandler.update();
                 break;
         }
         RenderHandler.update();
+    };
+
+    const _exitHost = (id) => {
+        accessArray[id].toggleActive();
+        if (accessArray[id].getAccess() === "admin"){
+            NUMADMINS--;
+        }
+        else {
+            NUMUSERS--;
+        }
+        RoundCalculator.calcRounds();
+        RenderHandler.update();
+    }
+
+    const exit = (id) => {
+        _exitHost(id);
     };
 
     const command = (command) => {
@@ -221,7 +262,8 @@ const InputHandler = (() => {
     };
 
     return {
-        command
+        command,
+        exit
     }
 })();
 
@@ -248,21 +290,15 @@ const RenderHandler = (() => {
     };
 
     const _loopAccess = () => {
-        for (let i = 0; i < adminArray.length; i++){
-           let name = adminArray[i].getName();
-           let notes = adminArray[i].getNotes();
-           let access = adminArray[i].getAccess();
-           let rounds = adminArray[i].getRounds();
-
-           _renderAccess(name,notes,access,rounds, i);
-        }
-        for (let i = 0; i < userArray.length; i++){
-            let name = userArray[i].getName();
-            let notes = userArray[i].getNotes();
-            let access = userArray[i].getAccess();
-            let rounds = userArray[i].getRounds();
- 
-            _renderAccess(name,notes,access,rounds, i);
+        for (let i = 0; i < accessArray.length; i++){
+            if (accessArray[i].getActive() === true){
+                let name = accessArray[i].getName();
+                let notes = accessArray[i].getNotes();
+                let access = accessArray[i].getAccess();
+                let rounds = accessArray[i].getRounds();
+     
+                _renderAccess(name,notes,access,rounds, i);
+            }
         }
     };
 
@@ -272,21 +308,29 @@ const RenderHandler = (() => {
         accessDiv.setAttribute("class", "access");
 
         let accessType = document.createElement("p");
-        accessType.innerHTML = access;
+        accessType.innerHTML = `Access: ${access}`;
 
         let accessName = document.createElement("p");
-        accessName.innerHTML = name;
+        accessName.innerHTML = `Name: ${name}`;
 
         let accessRounds = document.createElement("p");
-        accessRounds.innerHTML = `Rounds active: ${rounds}`;
+        accessRounds.innerHTML = `Rounds: ${rounds}`;
 
         let accessNotes = document.createElement("p");
         accessNotes.innerHTML = notes;
 
-        accessDiv.appendChild(accessType);
+        let button = document.createElement("button");
+        button.setAttribute("id", index);
+        button.setAttribute("class", 'removeAccessButton');
+        button.setAttribute('value', index);
+        button.textContent = "EXIT HOST";
+        button.setAttribute("onclick", "InputHandler.exit(this.id)");
+
         accessDiv.appendChild(accessName);
+        accessDiv.appendChild(accessType);
         accessDiv.appendChild(accessRounds);
         accessDiv.appendChild(accessNotes);
+        accessDiv.appendChild(button);
 
         document.getElementById("accessList").appendChild(accessDiv);
     };
@@ -296,7 +340,11 @@ const RenderHandler = (() => {
         while (accessDiv.length > 0){
             accessDiv[0].parentNode.removeChild(accessDiv[0]);
         }
-    };
+        let name = document.getElementById("accessName");
+        let notes = document.getElementById("accessNote");
+        name.value = "";
+        notes.value = "";
+        };
 
     const update = () => {
         _updateHTML();

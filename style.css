@@ -120,6 +120,39 @@ input[type=text], [type=number] {
     display: inline-block;
 }
 
+#accessList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;   
+}
+
+.access {
+    margin: 5px 10px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    flex: auto;
+    min-width: 100px;
+    max-width: 300px;
+    min-height: 100px;
+    text-align: center;
+}
+
+.access p {
+    margin: 5px;
+    text-align: left;
+}
+
+.removeAccessButton {
+    background-color: #121212;
+    color: #ffffff;
+    margin: 15px 0 10px 0;
+    width: 90%;
+    height: 30px;
+    font-size: 17px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+}
+
 .rebootBtn {
     background-color: RGB(255,69,58);
     filter: brightness(50%);
