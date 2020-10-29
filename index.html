@@ -39,7 +39,7 @@
             <button id="roundBtn" class="wideButton" type="button" onclick="InputHandler.command('newRound')">New round</button>   
             <div id="newAccess">
                 <form id="newAccessForm">
-                    <legend>Log new access</legend>
+                    <p>Log new access</p>
                     <input type="text" id="accessName" name="accessName" placeholder="n00b">
                     <input type="text" id="accessNote" name="accessNote" placeholder="notes about the sucker">
                 </form>
@@ -51,8 +51,8 @@
             <div id="rebootControls">
                 <!-- MAKE REBOOT BUTTON GREYED OUT AND UNCLICKABLE UNTIL COFNIRM IS PRESSED -->
                 <div id="rebootControlsConfirm">
-                    <button id="confirmBtn1" class="rebootBtn" type="button" onclick="InputHandler.command('confirmOne')">CONFIRM</button>
-                    <button id="confirmBtn2" class="rebootBtn" type="button" onclick="InputHandler.command('confirmTwo')">CONFIRM</button>
+                    <button id="confirmBtn1" class="rebootBtn halfVisible" type="button" onclick="InputHandler.command('confirmOne')">CONFIRM</button>
+                    <button id="confirmBtn2" class="rebootBtn halfVisible" type="button" onclick="InputHandler.command('confirmTwo')">CONFIRM</button>
                 </div>
                 <button id="stopBtn" class="halfVisible hoverNo" type="button" onclick="InputHandler.command('rebootCyberdeck')">REBOOT CYBERDECK</button>
             </div>
