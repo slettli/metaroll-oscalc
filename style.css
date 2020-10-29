@@ -209,15 +209,12 @@ input[type=text], [type=number] {
     filter: brightness(25%);
 }
 
-.halfVisible:hover {
-    filter: brightness(25%);
-}
-
 .fullyVisible   {
     filter: brightness(100%);
 }
 
 .hoverNo:hover {
+    filter: brightness(25%);
     cursor: not-allowed;
 }
 
