@@ -97,7 +97,6 @@ input[type=text], [type=number] {
 
 #stopBtn {
     background-color: RGB(48,209,88);
-    filter: brightness(25%);
     color: #000000;
     font-size: 22px;
     border-radius: 5px;
@@ -215,6 +214,31 @@ input[type=text], [type=number] {
     font-size: 48px;
 }
 
+.halfVisible {
+    filter: brightness(25%);
+}
+
+.halfVisible:hover {
+    filter: brightness(25%);
+}
+
 .fullyVisible   {
     filter: brightness(100%);
+}
+
+.hoverNo:hover {
+    cursor: not-allowed;
+}
+
+.hoverYes:hover {
+    filter: brightness(100%);
+    cursor: pointer;
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0.20; } 
+}
+
+.animateFade {
+    animation: fadeIn 1.3s infinite alternate;
 }

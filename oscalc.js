@@ -182,10 +182,15 @@ const RebootCyberdeck = (() => {
         NUMUSERS = 0;
         CONFIRMONE = false;
         CONFIRMTWO = false;
-        let tmp1 = document.getElementById("confirmBtn1");
-        tmp1.classList.remove("fullyVisible");
-        let tmp2 = document.getElementById("confirmBtn2");
-        tmp2.classList.remove("fullyVisible");
+        let tmp = document.getElementById("confirmBtn1");
+        tmp.classList.remove("fullyVisible");
+        tmp = document.getElementById("confirmBtn2");
+        tmp.classList.remove("fullyVisible");
+        tmp = document.getElementById("stopBtn");
+        tmp.classList.add("halfVisible");
+        tmp.classList.add("hoverNo");
+        tmp.classList.remove("animateFade");
+        tmp.classList.remove("hoverYes");
     };
 
     const reboot = () => {
@@ -229,14 +234,23 @@ const InputHandler = (() => {
                 tmp1.classList.add("fullyVisible");
                 break;
             case "confirmTwo":
-                CONFIRMONE = true;
+                CONFIRMTWO= true;
                 let tmp2 = document.getElementById("confirmBtn2");
                 tmp2.classList.add("fullyVisible");
                 break;
             case "rebootCyberdeck":
-                RebootCyberdeck.reboot();
-                RenderHandler.update();
+                if (CONFIRMONE === true && CONFIRMTWO === true){
+                    RebootCyberdeck.reboot();
+                    RenderHandler.update();
+                }
                 break;
+        }
+        if (CONFIRMONE === true && CONFIRMTWO === true){
+            let tmp = document.getElementById("stopBtn");
+            tmp.classList.remove("halfVisible");
+            tmp.classList.remove("hoverNo");
+            tmp.classList.add("animateFade");
+            tmp.classList.add("hoverYes");
         }
         RenderHandler.update();
     };
@@ -344,7 +358,7 @@ const RenderHandler = (() => {
         let notes = document.getElementById("accessNote");
         name.value = "";
         notes.value = "";
-        };
+    };
 
     const update = () => {
         _updateHTML();
