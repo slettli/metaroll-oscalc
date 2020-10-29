@@ -194,9 +194,9 @@ const RebootCyberdeck = (() => {
         document.getElementById("osDiv").classList.remove("glitch");
         document.getElementById("roundsUntilGod").classList.remove("glitch");
         document.getElementById("confirmBtn2").classList.remove("fullyVisible");
+        document.getElementById("confirmBtn1").classList.remove("fullyVisible");   
         document.getElementById("confirmBtn2").classList.add("halfVisible");   
-        document.getElementById("confirmBtn1").classList.add("fullyVisible");
-        document.getElementById("confirmBtn1").classList.remove("halfVisible");   
+        document.getElementById("confirmBtn1").classList.add("halfVisible");
     };
 
     const reboot = () => {
@@ -236,8 +236,8 @@ const InputHandler = (() => {
             case "confirmOne":
                 if (CONFIRMONE === false){
                     CONFIRMONE = true;
-                    document.getElementById("confirmBtn1").classList.add("fullyVisible");
                     document.getElementById("confirmBtn1").classList.remove("halfVisible");   
+                    document.getElementById("confirmBtn1").classList.add("fullyVisible");
                 }
                 else {
                     CONFIRMONE = false;
@@ -248,8 +248,8 @@ const InputHandler = (() => {
             case "confirmTwo":
                 if (CONFIRMTWO === false){
                     CONFIRMTWO = true;
-                    document.getElementById("confirmBtn2").classList.add("fullyVisible");
                     document.getElementById("confirmBtn2").classList.remove("halfVisible");   
+                    document.getElementById("confirmBtn2").classList.add("fullyVisible");
                 }
                 else {
                     CONFIRMTWO = false;
