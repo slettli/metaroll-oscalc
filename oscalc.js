@@ -191,6 +191,9 @@ const RebootCyberdeck = (() => {
         tmp.classList.add("hoverNo");
         tmp.classList.remove("animateFade");
         tmp.classList.remove("hoverYes");
+        document.getElementById("osDiv").classList.remove("glitch");
+        document.getElementById("roundsUntilGod").classList.remove("glitch");
+
     };
 
     const reboot = () => {
@@ -198,7 +201,6 @@ const RebootCyberdeck = (() => {
     };
 
     return { reboot }
-
 })();
 
 // Takes input from buttons and acts accordingly
@@ -229,14 +231,24 @@ const InputHandler = (() => {
                 RoundCalculator.calcRounds();
                 break;
             case "confirmOne":
-                CONFIRMONE = true;
-                let tmp1 = document.getElementById("confirmBtn1");
-                tmp1.classList.add("fullyVisible");
+                if (CONFIRMONE === false){
+                    CONFIRMONE = true;
+                    document.getElementById("confirmBtn1").classList.add("fullyVisible");
+                }
+                else {
+                    CONFIRMONE = false;
+                    document.getElementById("confirmBtn1").classList.remove("fullyVisible");
+                }
                 break;
             case "confirmTwo":
-                CONFIRMTWO= true;
-                let tmp2 = document.getElementById("confirmBtn2");
-                tmp2.classList.add("fullyVisible");
+                if (CONFIRMTWO === false){
+                    CONFIRMTWO = true;
+                    document.getElementById("confirmBtn2").classList.add("fullyVisible");
+                }
+                else {
+                    CONFIRMTWO = false;
+                    document.getElementById("confirmBtn2").classList.remove("fullyVisible");
+                }
                 break;
             case "rebootCyberdeck":
                 if (CONFIRMONE === true && CONFIRMTWO === true){
@@ -251,6 +263,17 @@ const InputHandler = (() => {
             tmp.classList.remove("hoverNo");
             tmp.classList.add("animateFade");
             tmp.classList.add("hoverYes");
+        }
+        else {
+            let tmp = document.getElementById("stopBtn");
+            tmp.classList.remove("animateFade");
+            tmp.classList.remove("hoverYes");
+            tmp.classList.add("halfVisible");
+            tmp.classList.add("hoverNo");
+        }
+        if (OS >= 30){
+            document.getElementById("osDiv").classList.add("glitch");
+            document.getElementById("roundsUntilGod").classList.add("glitch");
         }
         RenderHandler.update();
     };
@@ -284,15 +307,19 @@ const InputHandler = (() => {
 // Handles HTML and DOM manipulation
 const RenderHandler = (() => {
     const _updateHTML = () => {
-        document.getElementById("currentOS").innerHTML = OS;
+        document.getElementById("osDiv").title = OS;
+        document.getElementById("osDiv").innerHTML = OS;
         if (OS >= 40) {
             document.getElementById("roundsUntilGod").innerHTML = `- R I P -`;
+            document.getElementById("roundsUntilGod").title = `- R I P -`;
         }
         else if (UNTILGOD == 1){
             document.getElementById("roundsUntilGod").innerHTML = `- GOD IS COMING -`;
+            document.getElementById("roundsUntilGod").title = `- GOD IS COMING -`;
         }
         else {
             document.getElementById("roundsUntilGod").innerHTML = `Until GOD: ${UNTILGOD}`;
+            document.getElementById("roundsUntilGod").title = `Until GOD: ${UNTILGOD}`;
         }
         document.getElementById("roundsCounter").innerHTML = `Round: ${ROUNDS}`;
         document.getElementById("numPrograms").innerHTML = PROGRAMS;
