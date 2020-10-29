@@ -14,98 +14,142 @@ button:hover {
     filter: brightness(75%);
 }
 
+input[type=text], [type=number] {
+    height: 50px;
+    width: 70%;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    font-size:  25px;
+}
+
+input[type=radio]{
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* Main info */
+
 .content {
-    width: 396px;
-    margin: 10% auto;
-}
-
-/* Display for timer */
-
-#infoDisplay {
-    margin-top: 10px;
+    width: 98%;
+    margin: 2%;
     text-align: center;
-    font-size: 24px;
 }
 
-#infoDisplay p {
-    margin-top: 10px;
+#topInfo p {
     display: inline-block;
-    font-size: 18px;
-
 }
 
 #currentOS {
-    font-size: 72px;
+    font-size: 108px;
 }
 
-/* Playback controls for timer */
-
-#rebootControls {
-    margin-top: 30px;
-    text-align: center;
+#roundsUntilGod {
+    font-size: 48px;
 }
 
-#rebootControls button {
-    margin: 0 20px;
-}
-
-#stopBtn {
-    background-color: #BB86FC;
-    color: #000000;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    width: 80px;
-    height: 50px;
-    background-color: #BB86FC;
-}
-
-.playbackButton {
-    background-color: #BB86FC;
-    color: #000000;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    width: 80px;
-    height: 50px;
-}
-
-.playbackButton:hover {
-    background-color: #BB86FC;
-}
-
-/* Controls to adjust duration */
-
-#controls {
-    width: 100%;
-    margin-top: 30px;
-    text-align: center;
-}
-
-#controls p {
-    display: inline;
-}
-
-.metaControls {
-    width: 150px;
-    display: inline-block;
-    margin: 0 10px;
-    line-height: 25px;
-}
-
-.metaButtons {
+#infoDisplay {
     margin-top: 10px;
 }
 
-.durationButton {
-    background-color: #03DAC6;
+#infoDisplay p {
+    font-size: 36px;
+    display: inline-block;
+}
+
+/* Controls */
+
+#programsContainer, #hitsContainer {
+    width: 100%;
+}
+
+#programsContainer p, #hitsContainer p {
+    display: inline;
+    line-height: 100px;
+}
+
+#roundBtn {
+    margin-top: 7%;
+    background-color: RGB(36,138,61);
+}
+
+#newAccess {
+    margin-top: 7%;
+    font-size: 42px;
+}
+
+#newAccessBtn {
+    margin-top: 30px;
+}
+
+#rebootControls {
+    margin-top: 7%;
+}
+
+#rebootControls button {
+    margin: 1%;
+}
+
+#stopBtn {
+    background-color: RGB(48,209,88);
+    filter: brightness(25%);
+    color: #000000;
+    font-size: 42px;
+    border-radius: 5px;
+    border: none;
+    width: 52%;
+}
+
+.rebootBtn {
+    background-color: RGB(255,69,58);
+    filter: brightness(50%);
+    color: white;
+    font-size:42px;
+    border-radius: 5px;
+    border: none;
+    width: 25%;
+}
+
+.rebootBtn:hover {
+    filter: brightness(90%);
+}
+
+.metaControls {
+    width: 50%;
+    font-size: 25px;
+    display: inline-block;
+}
+
+.numButton {
+    background-color: RGB(142,142,147);
     font-weight: bold;
     font-family: arial;
     border-radius: 5px;
     border: none;
-    width: 25px;
-    height: 25px;
-    font-size: 18px;
+    width: 100px;
+    height: 100px;
+    font-size: 75px;
+}
+
+.wideButton {
+    background-color: RGB(36,138,61);
+    color: #000000;
+    font-size:72px;
+    border-radius: 5px;
+    border: none;
+    width: 90%;
+}
+
+.halfWideButton {
+    background-color: RGB(36,138,61);
+    color: #000000;
+    font-size:72px;
+    border-radius: 5px;
+    border: none;
+    width: 45%;
 }
 
 .downBtn {
@@ -114,4 +158,12 @@ button:hover {
 
 .upBtn {
     float: right;
+}
+
+.numIndicator {
+    font-size: 48px;
+}
+
+.fullyVisible   {
+    filter: brightness(100%);
 }

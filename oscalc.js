@@ -116,10 +116,10 @@ const AccessObject = (name, notes) => {
 
 // Reads input from New Access form and creates new access accordingly
 const NewAccess = (() => {
-    const _readForm = () => {
+    const _readForm = (type) => {
         let name = document.getElementById("accessName").value;
         let notes = document.getElementById("accessNote").value;
-        if (document.getElementById("adminRadio").checked == true){
+        if (type === "admin"){
             _newAdmin(name,notes);
         }
         else {
@@ -140,8 +140,8 @@ const NewAccess = (() => {
         NUMUSERS++;
     };
 
-    const add = () => {
-        _readForm();
+    const add = (type) => {
+        _readForm(type);
     };
 
     return { add }
@@ -204,8 +204,12 @@ const InputHandler = (() => {
             case "newRound":
                 RoundCalculator.newRound();
                 break;
-            case "newAccess":
-                NewAccess.add();
+            case "newUser":
+                NewAccess.add("newUser");
+                RoundCalculator.calcOS();
+                break;
+            case "newAdmin":
+                NewAccess.add("newAdmin");
                 RoundCalculator.calcOS();
                 break;
         }
@@ -225,7 +229,10 @@ const InputHandler = (() => {
 const RenderHandler = (() => {
     const _updateHTML = () => {
         document.getElementById("currentOS").innerHTML = OS;
-        if (UNTILGOD == 1){
+        if (OS >= 40) {
+            document.getElementById("roundsUntilGod").innerHTML = `- R I P -`;
+        }
+        else if (UNTILGOD == 1){
             document.getElementById("roundsUntilGod").innerHTML = `- GOD IS COMING -`;
         }
         else {
