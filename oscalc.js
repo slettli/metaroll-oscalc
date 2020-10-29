@@ -193,7 +193,10 @@ const RebootCyberdeck = (() => {
         tmp.classList.remove("hoverYes");
         document.getElementById("osDiv").classList.remove("glitch");
         document.getElementById("roundsUntilGod").classList.remove("glitch");
-
+        document.getElementById("confirmBtn2").classList.remove("fullyVisible");
+        document.getElementById("confirmBtn2").classList.add("halfVisible");   
+        document.getElementById("confirmBtn1").classList.add("fullyVisible");
+        document.getElementById("confirmBtn1").classList.remove("halfVisible");   
     };
 
     const reboot = () => {
