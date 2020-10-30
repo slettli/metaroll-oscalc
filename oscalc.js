@@ -1,38 +1,45 @@
-let accessArray = [];
+/*
+  __  __ _____ _____  _    ____   ___  _     _       _   _ _____ _____ 
+ |  \/  | ____|_   _|/ \  |  _ \ / _ \| |   | |     | \ | | ____|_   _|
+ | |\/| |  _|   | | / _ \ | |_) | | | | |   | |     |  \| |  _|   | |  
+ | |  | | |___  | |/ ___ \|  _ <| |_| | |___| |___ _| |\  | |___  | |  
+ |_|  |_|_____| |_/_/   \_\_| \_\\___/|_____|_____(_)_| \_|_____| |_|  
+                                                                       
+*/
+let accessArray = []; // Array holding all of the AccessObjects of hacked users / admins
 let OSMAX = 40; // Max OS score before GOD smites you
 let OS = 0; // The decker's OS score
-let ROUNDS = 0;
+let ROUNDS = 0; // Number of rounds hacking
 let PROGRAMS = 0; // Number of illegal programs used per actions
 let HITS = 0; // Total opposed hits on illegal actions
-let UNTILGOD = "???";
-let NUMADMINS = 0;
-let NUMUSERS = 0;
-let CONFIRMONE = false;
+let UNTILGOD = "???"; // Rounds left until GOD smites thee
+let NUMADMINS = 0; // Number of active admins
+let NUMUSERS = 0; // Number of active users
+let CONFIRMONE = false; // Whether confirm button one has been pressed
 let CONFIRMTWO = false;
 
+// Load previous state (if any) and render
 window.onload = (event) => {
     StorageHandler.get();
     RenderHandler.update();
 };
 
-// Runs each rounds and does necessary calculations
-// This should be split up more for organizing
+// Runs each round and does necessary calculations
 const RoundCalculator = (() => {
-
     const _newRound = () => {
         _calculateOS();
         _calcRounds();
         _updateRounds();
         ROUNDS++;
     };
-    
+    // Calculate OS score in regards to active users and admins
     const _calculateOS = () => {
         let adminOS = NUMADMINS;
         adminOS = adminOS * 3;
         let userOS = NUMUSERS;
         OS = OS + adminOS + userOS; // Add to OS
     };
-
+    // Calculates remaining rounds until GOD smithes thee
     const _calcRounds = () => {
         let adminOS = NUMADMINS;
         adminOS = adminOS * 3;
@@ -50,7 +57,7 @@ const RoundCalculator = (() => {
         }
 
     }
-
+    // Increment round counter for each access object
     const _updateRounds = () => {
         if (accessArray.length > 0){
             for (let i = 0; i < accessArray.length; i++){
@@ -78,8 +85,8 @@ const RoundCalculator = (() => {
 // Factory that creates AdminObjects
 const AccessObject = (name, notes) => {
     let _activeRounds = 1; // How many sustained rounds has the decker sustained admin?
-    let _active = true; // Is the decker currently in host as admin?
-    let _access = "user";
+    let _active = true; // Is the decker currently accessing this host?
+    let _access = "user"; // Level of access
 
     const addRound = () => _activeRounds++;
     const setRounds = (rounds) => _activeRounds = rounds;
@@ -129,7 +136,7 @@ const NewAccess = (() => {
         accessArray.push(newUser);
         NUMUSERS++;
     };
-
+    // Used to rebuild new access objects using info from LocalStorage.
     const _rebuildAccessList = (rounds, active, access, name, notes) => {
         let newAccess = AccessObject(name, notes);
         newAccess.setRounds(rounds);
@@ -156,7 +163,7 @@ const NewAccess = (() => {
     }
 })();
 
-// Small things that change the OS
+// Small things that change the OS 
 const UpdateOS = (() => {
     // OS increases by 1 for each matrix action modified by a hacking program
     // OS increases by 1 per hit on opposing roll
@@ -169,7 +176,7 @@ const UpdateOS = (() => {
         }
         OS++;
     };
-
+    // Manually decrease OS
     const _decOS = (type) => {
         if (type === "program"){
             PROGRAMS--;
@@ -194,15 +201,15 @@ const UpdateOS = (() => {
      }
 })();
 
-// Restarts the tracker
+// Restarts the tracker, resets every variable, custom classes and wipes LocalStorage.
 const RebootCyberdeck = (() => {
     const _restartTracker = () => {
         accessArray = [];
-        OSMAX = 40; // Max OS score before GOD smites you
-        OS = 0; // The decker's OS score
+        OSMAX = 40;
+        OS = 0;
         ROUNDS = 0;
-        PROGRAMS = 0; // Number of illegal programs used per actions
-        HITS = 0; // Total opposed hits on illegal actions
+        PROGRAMS = 0;
+        HITS = 0;
         UNTILGOD = "???";
         NUMADMINS = 0;
         NUMUSERS = 0;
@@ -235,6 +242,7 @@ const RebootCyberdeck = (() => {
 
 // Takes input from buttons and acts accordingly
 const InputHandler = (() => {
+    // Takes command inputs as strings from buttons on page
     const _handleCommand = (command) => {
         switch(command){
             case "increasePrograms":
@@ -290,6 +298,7 @@ const InputHandler = (() => {
                 }
                 break;
         }
+        // Make 'Reboot Cyberdeck' button appear accessible
         if (CONFIRMONE === true && CONFIRMTWO === true){
             let tmp = document.getElementById("stopBtn");
             tmp.classList.remove("halfVisible");
@@ -297,6 +306,7 @@ const InputHandler = (() => {
             tmp.classList.add("animateFade");
             tmp.classList.add("hoverYes");
         }
+        // Reset 'Reboot Cyberdeck' button in case user changes his mind
         else {
             let tmp = document.getElementById("stopBtn");
             tmp.classList.remove("animateFade");
@@ -304,6 +314,7 @@ const InputHandler = (() => {
             tmp.classList.add("halfVisible");
             tmp.classList.add("hoverNo");
         }
+        // Make the OS score look glitchy when you're approaching OSMAX
         if (OS >= 30 || UNTILGOD == 1){
             document.getElementById("osDiv").classList.add("glitch");
             document.getElementById("roundsUntilGod").classList.add("glitch");
@@ -311,7 +322,7 @@ const InputHandler = (() => {
         StorageHandler.save();
         RenderHandler.update();
     };
-
+    // Set active state to false for access object, decrease number of according access
     const _exitHost = (id) => {
         accessArray[id].toggleActive();
         if (accessArray[id].getAccess() === "admin"){
@@ -341,6 +352,7 @@ const InputHandler = (() => {
 
 // Handles HTML and DOM manipulation
 const RenderHandler = (() => {
+    // Updates the info in HTML
     const _updateHTML = () => {
         document.getElementById("osDiv").title = OS;
         document.getElementById("osDiv").innerHTML = OS;
@@ -364,7 +376,7 @@ const RenderHandler = (() => {
         _clearDOM();
         _loopAccess();
     };
-
+    // Loop the list of hosts currently being hacked into
     const _loopAccess = () => {
         for (let i = 0; i < accessArray.length; i++){
             if (accessArray[i].getActive() === true){
@@ -377,7 +389,7 @@ const RenderHandler = (() => {
             }
         }
     };
-
+    // Render the list of hosts currently being hacked into
     const _renderAccess = (name, notes, access, rounds, index) => {
         let accessDiv = document.createElement("div");
         accessDiv.setAttribute("id", access + index);
@@ -410,7 +422,7 @@ const RenderHandler = (() => {
 
         document.getElementById("accessList").appendChild(accessDiv);
     };
-
+    // Clear the list of hosts before rendering new ones
     const _clearDOM = () => {
         let accessDiv = document.getElementsByClassName("access");
         while (accessDiv.length > 0){
@@ -433,7 +445,7 @@ const RenderHandler = (() => {
 
 // Handles data storage to localstorage
 const StorageHandler = (() => {
-
+    // Get all stored values from localstorage (if any), parse string to integer where needed
     const _getLocalStorage = () => {
         if(localStorage.getItem('accessArray') != null) {
             _accessArrayRebuilder();
@@ -484,7 +496,7 @@ const StorageHandler = (() => {
         }
         localStorage.setItem('accessArray', JSON.stringify(storageArray));
     };
-    // Data is stored as objects in an array, and as such AccessObjects must be rebuilt on load
+    // The list of hosts/access had to be stored as objects in an array, so all AccessObjects must be rebuilt on load
     const _accessArrayRebuilder = () => {
         let tmpArr = JSON.parse(localStorage.getItem('accessArray') || "[]");
         for (let i = 0; i < tmpArr.length; i++){
@@ -497,7 +509,7 @@ const StorageHandler = (() => {
             NewAccess.rebuild(rounds, active, access, name, notes);
         }
     };
-
+    // Add or update all normal variables
     const _updateLocalStorage = () => {
         localStorage.setItem('OSMAX', OSMAX);
         localStorage.setItem('OS', OS);
