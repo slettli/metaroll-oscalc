@@ -91,7 +91,7 @@ const AccessObject = (name, notes) => {
     const addRound = () => _activeRounds++;
     const setRounds = (rounds) => _activeRounds = rounds;
     const toggleActive = () => _active == true ? _active = false : _active = true;
-    const toggleAccess = () => _access === "user" ? _access = "admin" : _access = "user";
+    const toggleAccess = () => _access == "user" ? _access = "admin" : _access = "user";
     const getRounds = () => _activeRounds;
     const getActive = () => _active;
     const getName = () => name;
@@ -168,20 +168,20 @@ const UpdateOS = (() => {
     // OS increases by 1 for each matrix action modified by a hacking program
     // OS increases by 1 per hit on opposing roll
     const _addOS = (type) => {
-        if (type === "program"){
+        if (type == "program"){
             PROGRAMS++;
         }
-        else if (type === "hits"){
+        else if (type == "hits"){
             HITS++;
         }
         OS++;
     };
     // Manually decrease OS
     const _decOS = (type) => {
-        if (type === "program"){
+        if (type == "program"){
             PROGRAMS--;
         }
-        else if (type === "hits"){
+        else if (type == "hits"){
             HITS--;
         }
         OS--;
@@ -269,7 +269,7 @@ const InputHandler = (() => {
                 RoundCalculator.calcRounds();
                 break;
             case "confirmOne":
-                if (CONFIRMONE === false){
+                if (CONFIRMONE == false){
                     CONFIRMONE = true;
                     document.getElementById("confirmBtn1").classList.remove("halfVisible");   
                     document.getElementById("confirmBtn1").classList.add("fullyVisible");
@@ -281,7 +281,7 @@ const InputHandler = (() => {
                 }
                 break;
             case "confirmTwo":
-                if (CONFIRMTWO === false){
+                if (CONFIRMTWO == false){
                     CONFIRMTWO = true;
                     document.getElementById("confirmBtn2").classList.remove("halfVisible");   
                     document.getElementById("confirmBtn2").classList.add("fullyVisible");
@@ -293,13 +293,13 @@ const InputHandler = (() => {
                 }
                 break;
             case "rebootCyberdeck":
-                if (CONFIRMONE === true && CONFIRMTWO === true){
+                if (CONFIRMONE == true && CONFIRMTWO == true){
                     RebootCyberdeck.reboot();
                 }
                 break;
         }
         // Make 'Reboot Cyberdeck' button appear accessible
-        if (CONFIRMONE === true && CONFIRMTWO === true){
+        if (CONFIRMONE == true && CONFIRMTWO == true){
             let tmp = document.getElementById("stopBtn");
             tmp.classList.remove("halfVisible");
             tmp.classList.remove("hoverNo");
@@ -474,12 +474,6 @@ const StorageHandler = (() => {
         if(localStorage.getItem('NUMUSERS') != null) {
             NUMUSERS = parseInt(localStorage.getItem('NUMUSERS'));
         }
-        if(localStorage.getItem('CONFIRMONE') != null) {
-            CONFIRMONE = parseInt(localStorage.getItem('CONFIRMONE'));
-        }
-        if(localStorage.getItem('CONFIRMTWO') != null) {
-            CONFIRMTWO = parseInt(localStorage.getItem('CONFIRMTWO'));
-        } 
     };
     // LocalStorage only takes strings, so we parse info about the AccessObjects into objects and then into json
     const _accessArraySaver = () => {
@@ -519,8 +513,6 @@ const StorageHandler = (() => {
         localStorage.setItem('UNTILGOD', UNTILGOD);
         localStorage.setItem('NUMADMINS', NUMADMINS);
         localStorage.setItem('NUMUSERS', NUMUSERS);
-        localStorage.setItem('CONFIRMONE', CONFIRMONE);
-        localStorage.setItem('CONFIRMTWO', CONFIRMTWO);
         _accessArraySaver();
     };
 
