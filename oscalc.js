@@ -10,6 +10,11 @@ let NUMUSERS = 0;
 let CONFIRMONE = false;
 let CONFIRMTWO = false;
 
+window.onload = (event) => {
+    StorageHandler.get();
+    RenderHandler.update();
+};
+
 // Runs each rounds and does necessary calculations
 // This should be split up more for organizing
 const RoundCalculator = (() => {
@@ -77,6 +82,7 @@ const AccessObject = (name, notes) => {
     let _access = "user";
 
     const addRound = () => _activeRounds++;
+    const setRounds = (rounds) => _activeRounds = rounds;
     const toggleActive = () => _active == true ? _active = false : _active = true;
     const toggleAccess = () => _access === "user" ? _access = "admin" : _access = "user";
     const getRounds = () => _activeRounds;
@@ -87,6 +93,7 @@ const AccessObject = (name, notes) => {
 
     return {
         addRound,
+        setRounds,
         toggleActive,
         toggleAccess,
         getRounds,
@@ -123,11 +130,30 @@ const NewAccess = (() => {
         NUMUSERS++;
     };
 
+    const _rebuildAccessList = (rounds, active, access, name, notes) => {
+        let newAccess = AccessObject(name, notes);
+        newAccess.setRounds(rounds);
+        if (active == false){
+            newAccess.toggleActive();
+        }
+        if (access == "admin"){
+            newAccess.toggleAccess();
+        }
+        accessArray.push(newAccess);
+    }
+
     const add = (type) => {
         _readForm(type);
     };
 
-    return { add }
+    const rebuild = (rounds, active, access, name, notes) => {
+        _rebuildAccessList(rounds, active, access, name, notes);
+    };
+
+    return { 
+        add,
+        rebuild
+    }
 })();
 
 // Small things that change the OS
@@ -197,6 +223,7 @@ const RebootCyberdeck = (() => {
         document.getElementById("confirmBtn1").classList.remove("fullyVisible");   
         document.getElementById("confirmBtn2").classList.add("halfVisible");   
         document.getElementById("confirmBtn1").classList.add("halfVisible");
+        StorageHandler.wipe();
     };
 
     const reboot = () => {
@@ -281,6 +308,7 @@ const InputHandler = (() => {
             document.getElementById("osDiv").classList.add("glitch");
             document.getElementById("roundsUntilGod").classList.add("glitch");
         }
+        StorageHandler.save();
         RenderHandler.update();
     };
 
@@ -293,6 +321,7 @@ const InputHandler = (() => {
             NUMUSERS--;
         }
         RoundCalculator.calcRounds();
+        StorageHandler.save();
         RenderHandler.update();
     }
 
@@ -402,7 +431,106 @@ const RenderHandler = (() => {
     }
 })();
 
-// Stores data to localstorage
-const storeData = (() => {
+// Handles data storage to localstorage
+const StorageHandler = (() => {
 
+    const _getLocalStorage = () => {
+        if(localStorage.getItem('accessArray') != null) {
+            _accessArrayRebuilder();
+        }
+        if(localStorage.getItem('OSMAX') != null) {
+            OSMAX = parseInt(localStorage.getItem('OSMAX'));
+        }
+        if(localStorage.getItem('OS') != null) {
+            OS = parseInt(localStorage.getItem('OS'));
+        }
+        if(localStorage.getItem('ROUNDS') != null) {
+            ROUNDS = parseInt(localStorage.getItem('ROUNDS'));
+        }
+        if(localStorage.getItem('PROGRAMS') != null) {
+            PROGRAMS = parseInt(localStorage.getItem('PROGRAMS'));
+        }
+        if(localStorage.getItem('HITS') != null) {
+            HITS = parseInt(localStorage.getItem('HITS'));
+        }
+        if((localStorage.getItem('UNTILGOD') != null) && (localStorage.getItem('UNTILGOD') != "???")) {
+            UNTILGOD = parseInt(localStorage.getItem('UNTILGOD'));
+        }
+        if(localStorage.getItem('NUMADMINS') != null) {
+            NUMADMINS = parseInt(localStorage.getItem('NUMADMINS'));
+        }
+        if(localStorage.getItem('NUMUSERS') != null) {
+            NUMUSERS = parseInt(localStorage.getItem('NUMUSERS'));
+        }
+        if(localStorage.getItem('CONFIRMONE') != null) {
+            CONFIRMONE = parseInt(localStorage.getItem('CONFIRMONE'));
+        }
+        if(localStorage.getItem('CONFIRMTWO') != null) {
+            CONFIRMTWO = parseInt(localStorage.getItem('CONFIRMTWO'));
+        } 
+    };
+    // LocalStorage only takes strings, so we parse info about the AccessObjects into objects and then into json
+    const _accessArraySaver = () => {
+        let storageArray = [];
+        for (let i = 0; i < accessArray.length; i++){
+            let rounds = accessArray[i].getRounds();
+            let active = accessArray[i].getActive();
+            let access = accessArray[i].getAccess();
+            let name = accessArray[i].getName();
+            let notes = accessArray[i].getNotes();
+            
+            let accessObject = {rounds, active, access, name, notes};
+            storageArray.push(accessObject);
+        }
+        localStorage.setItem('accessArray', JSON.stringify(storageArray));
+    };
+    // Data is stored as objects in an array, and as such AccessObjects must be rebuilt on load
+    const _accessArrayRebuilder = () => {
+        let tmpArr = JSON.parse(localStorage.getItem('accessArray') || "[]");
+        for (let i = 0; i < tmpArr.length; i++){
+            let rounds = parseInt(tmpArr[i].rounds);
+            let active = tmpArr[i].active;
+            let access = tmpArr[i].access;
+            let name = tmpArr[i].name;
+            let notes = tmpArr[i].notes;
+
+            NewAccess.rebuild(rounds, active, access, name, notes);
+        }
+    };
+
+    const _updateLocalStorage = () => {
+        localStorage.setItem('OSMAX', OSMAX);
+        localStorage.setItem('OS', OS);
+        localStorage.setItem('ROUNDS', ROUNDS);
+        localStorage.setItem('PROGRAMS', PROGRAMS);
+        localStorage.setItem('HITS', HITS);
+        localStorage.setItem('UNTILGOD', UNTILGOD);
+        localStorage.setItem('NUMADMINS', NUMADMINS);
+        localStorage.setItem('NUMUSERS', NUMUSERS);
+        localStorage.setItem('CONFIRMONE', CONFIRMONE);
+        localStorage.setItem('CONFIRMTWO', CONFIRMTWO);
+        _accessArraySaver();
+    };
+
+    const _wipeLocalStorage = () => {
+        localStorage.clear();
+    };
+
+    const get = () => {
+        _getLocalStorage();
+    };
+
+    const save = () => {
+        _updateLocalStorage();
+    };
+
+    const wipe = () => {
+        _wipeLocalStorage();
+    };
+
+    return {
+        save,
+        wipe,
+        get
+    }
 })();

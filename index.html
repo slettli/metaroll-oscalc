@@ -4,7 +4,7 @@
         <title>oscalc</title>
         <script type="text/javascript" src="oscalc.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     </head>
     <body>
         <div class="content">
@@ -49,7 +49,6 @@
                 </div>
             </div>
             <div id="rebootControls">
-                <!-- MAKE REBOOT BUTTON GREYED OUT AND UNCLICKABLE UNTIL COFNIRM IS PRESSED -->
                 <div id="rebootControlsConfirm">
                     <button id="confirmBtn1" class="rebootBtn halfVisible" type="button" onclick="InputHandler.command('confirmOne')">CONFIRM</button>
                     <button id="confirmBtn2" class="rebootBtn halfVisible" type="button" onclick="InputHandler.command('confirmTwo')">CONFIRM</button>
