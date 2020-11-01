@@ -4,7 +4,7 @@
 
 *Well.*
 
-The result is a simple tool to keep track of your overwatch score while hacking as a decker in Shadowrun 6e. It continually tells you how many rounds remain until GOD smites you. You can track number of opposed hits and programs used, as well as any hosts you hack into. Other calculations or modifiers should be tracked by hand. Designed for mobile use.
+The result is a simple tool to keep track of your overwatch score while hacking as a decker in Shadowrun 6e. It continually tells you how many rounds remain until GOD smites you. You can track the number of opposed hits and programs used, as well as any hosts you hack into. Other calculations or modifiers should be tracked by hand. Designed for mobile use.
 
 ## What it tracks
 
@@ -37,4 +37,4 @@ Pls no steal this very important code, thanks
 
 ## Acknowledgments
 
-* The [glitch](https://codepen.io/pgalor/pen/OeRWJQ) effect from [here](https://1stwebdesigner.com/trippy-css-distortion-effects/).
+* A cool CSS [glitch](https://codepen.io/pgalor/pen/OeRWJQ) effect from [here](https://1stwebdesigner.com/trippy-css-distortion-effects/).
