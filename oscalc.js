@@ -55,7 +55,6 @@ const RoundCalculator = (() => {
         else {
             UNTILGOD = "???";
         }
-
     }
     // Increment round counter for each access object
     const _updateRounds = () => {
@@ -247,15 +246,19 @@ const InputHandler = (() => {
         switch(command){
             case "increasePrograms":
                 UpdateOS.increaseOS("program");
+                RoundCalculator.calcRounds();
                 break;
             case "decreasePrograms":
                 UpdateOS.decreaseOS("program");
+                RoundCalculator.calcRounds();
                 break;
             case "increaseHits":
                 UpdateOS.increaseOS("hits");
+                RoundCalculator.calcRounds();
                 break;
             case "decreaseHits":
                 UpdateOS.decreaseOS("hits");
+                RoundCalculator.calcRounds();
                 break;
             case "newRound":
                 RoundCalculator.newRound();
@@ -271,25 +274,25 @@ const InputHandler = (() => {
             case "confirmOne":
                 if (CONFIRMONE == false){
                     CONFIRMONE = true;
-                    document.getElementById("confirmBtn1").classList.remove("halfVisible");   
-                    document.getElementById("confirmBtn1").classList.add("fullyVisible");
+                    document.getElementById("confirmBtn1").classList.remove("fullyVisible");   
+                    document.getElementById("confirmBtn1").classList.add("halfVisible");
                 }
                 else {
                     CONFIRMONE = false;
-                    document.getElementById("confirmBtn1").classList.remove("fullyVisible");
-                    document.getElementById("confirmBtn1").classList.add("halfVisible");   
+                    document.getElementById("confirmBtn1").classList.remove("halfVisible");
+                    document.getElementById("confirmBtn1").classList.add("fullyVisible");   
                 }
                 break;
             case "confirmTwo":
                 if (CONFIRMTWO == false){
                     CONFIRMTWO = true;
-                    document.getElementById("confirmBtn2").classList.remove("halfVisible");   
-                    document.getElementById("confirmBtn2").classList.add("fullyVisible");
+                    document.getElementById("confirmBtn2").classList.remove("fullyVisible");   
+                    document.getElementById("confirmBtn2").classList.add("halfVisible");
                 }
                 else {
                     CONFIRMTWO = false;
-                    document.getElementById("confirmBtn2").classList.remove("fullyVisible");
-                    document.getElementById("confirmBtn2").classList.add("halfVisible");   
+                    document.getElementById("confirmBtn2").classList.remove("halfVisible");
+                    document.getElementById("confirmBtn2").classList.add("fullyVisible");   
                 }
                 break;
             case "rebootCyberdeck":
@@ -473,6 +476,10 @@ const StorageHandler = (() => {
         }
         if(localStorage.getItem('NUMUSERS') != null) {
             NUMUSERS = parseInt(localStorage.getItem('NUMUSERS'));
+        }
+        if (OS >= 30 || UNTILGOD == 1){
+            document.getElementById("osDiv").classList.add("glitch");
+            document.getElementById("roundsUntilGod").classList.add("glitch");
         }
     };
     // LocalStorage only takes strings, so we parse info about the AccessObjects into objects and then into json

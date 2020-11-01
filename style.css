@@ -133,8 +133,8 @@ input[type=text], [type=number] {
     border: 1px solid #dedede;
     border-radius: 5px;
     flex: auto;
-    min-width: 100px;
-    max-width: 300px;
+    min-width: 150px;
+    max-width: 100%;
     min-height: 100px;
     text-align: center;
 }
@@ -217,7 +217,7 @@ input[type=text], [type=number] {
 }
 
 .fullyVisible   {
-    filter: brightness(100%);
+    filter: brightness(80%);
 }
 
 .hoverNo:hover {
