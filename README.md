@@ -31,10 +31,6 @@ The result is a simple tool to keep track of your overwatch score while hacking 
 * The tracker saves data automatically in your browser's local storage, so everything *should* still be there if you close the website or the browser. Unless you delete your browser history or use incognito mode, of course. 
 * It only stores text in your browser's local storage. This is variables with numbers and info about hosts. No tracking or anything, except maybe from github which it's hosted at, dunno.
 
-## License
-
-Pls no steal this very important code, thanks
-
 ## Acknowledgments
 
 * A cool CSS [glitch](https://codepen.io/pgalor/pen/OeRWJQ) effect from [here](https://1stwebdesigner.com/trippy-css-distortion-effects/).
